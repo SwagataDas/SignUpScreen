@@ -17,6 +17,7 @@ import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
@@ -25,6 +26,8 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.basgeekball.awesomevalidation.AwesomeValidation;
@@ -38,11 +41,15 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Calendar;
 
+import static android.widget.Toast.LENGTH_SHORT;
+
 public class SignupActivity extends AppCompatActivity implements View.OnClickListener {
     Button signupButton, asubutton;
     ImageView calenderButton;
-    ImageView imageView1;
-    EditText dob, firstname, lastname, emailid;
+    ImageView profilepic,backbtn;
+    TextView textView;
+    EditText dob, firstname, lastname, emailid, password;
+    RadioGroup radioGroup;
     DatePickerDialog datePickerDialog;
     private int mYear, mMonth, mDay;
     private AwesomeValidation awesomeValidation;
@@ -60,17 +67,11 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_signup);
 
         signupButton = (Button) findViewById(R.id.signup);
-        //email validation
-        //awesomeValidation.addValidation(this, R.id.firstname, "^[A-Za-z\\s]{1,}[\\.]{0,1}[A-Za-z\\s]{0,}$", R.string.nameerror);
-        //awesomeValidation.addValidation(this, R.id.lastname, "^[A-Za-z\\s]{1,}[\\.]{0,1}[A-Za-z\\s]{0,}$", R.string.nameerror);
-        awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
-        awesomeValidation.addValidation(this, R.id.email, Patterns.EMAIL_ADDRESS, R.string.emailerror);
-
         signupButton.setOnClickListener(this);
 
 
-        imageView1 = (ImageView) findViewById(R.id.imageView);
-        imageView1.setOnClickListener(new View.OnClickListener() {
+        profilepic = (ImageView) findViewById(R.id.dp);
+        profilepic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
@@ -81,7 +82,29 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         firstname = (EditText) findViewById(R.id.firstname);
         lastname = (EditText) findViewById(R.id.lastname);
         emailid = (EditText) findViewById(R.id.email);
+        password = (EditText) findViewById(R.id.password);
         calenderButton = (ImageView) findViewById(R.id.dobbtn);
+        asubutton = (Button) findViewById(R.id.asu);
+        asubutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                asubutton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent3 = new Intent(SignupActivity.this, LoginActivity.class);
+                        startActivity(intent3);
+                    }
+                });
+            }
+        });
+        radioGroup = (RadioGroup) findViewById(R.id.radiogroup);
+        backbtn = (ImageView) findViewById(R.id.backbtn);
+        backbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         calenderButton.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
@@ -107,13 +130,56 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent3 = new Intent(SignupActivity.this, UserprofileActivity.class);
-                startActivity(intent3);
+                if (validationSuccess()) {
+                    Intent intent3 = new Intent(SignupActivity.this, UserprofileActivity.class);
+                    startActivity(intent3);
+                } else {
+
+                }
+            }
+
+            private boolean validationSuccess() {
+                if (radioGroup.getCheckedRadioButtonId() <= 0) {
+                    Toast.makeText(getApplicationContext(), "Please select Gender", LENGTH_SHORT).show();
+                    return false;
+                }
+
+                String email = emailid.getText().toString();
+                String fname = firstname.getText().toString();
+                String lname = lastname.getText().toString();
+                String ps = password.getText().toString();
+
+                if (TextUtils.isEmpty(fname))
+                    Toast.makeText(SignupActivity.this, "Please enter your first name", LENGTH_SHORT).show();
+                else if (TextUtils.isEmpty(lname))
+                    Toast.makeText(SignupActivity.this, "Please enter your last name", LENGTH_SHORT).show();
+                else if (TextUtils.isEmpty(ps))
+                    Toast.makeText(SignupActivity.this, "Password Minimum 8 characters", LENGTH_SHORT).show();
+                else {
+                    Boolean b = isValidEmail(email);
+                    if (b) {
+                        Toast.makeText(SignupActivity.this, "Registration Successful", LENGTH_SHORT).show();
+                        Intent intent;
+                        intent = new Intent(SignupActivity.this,LoginActivity.class);
+                        startActivity(intent);
+                    } else
+                        Toast.makeText(SignupActivity.this, "Enter Valid Email", LENGTH_SHORT).show();
+                }
+                return false;
+                    }
+
+
+            public final Boolean isValidEmail(CharSequence target) {
+                if (TextUtils.isEmpty(target)) {
+                    Toast.makeText(SignupActivity.this, "Enter valid email", LENGTH_SHORT).show();
+                    return false;
+                } else {
+                    return Patterns.EMAIL_ADDRESS.matcher(target).matches();
+                }
+
             }
         });
-
     }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
@@ -202,7 +268,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
             e.printStackTrace();
         }
 
-        imageView1.setImageBitmap(thumbnail);
+        profilepic.setImageBitmap(thumbnail);
     }
 
     @SuppressWarnings("deprecation")
@@ -217,7 +283,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
             }
         }
 
-        imageView1.setImageBitmap(bm);
+        profilepic.setImageBitmap(bm);
     }
 
 
@@ -235,13 +301,5 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         }
 
     }
-
-    //asubutton.setOnClickListener(new View.OnClickListener() {
-    // @Override
-    // public void onClick(View view) {
-    //   Intent intent3 = new Intent(SignupActivity.this, UserprofileActivity.class);
-    //   startActivity(intent3);
-    //  }
-    // });
 }
 
