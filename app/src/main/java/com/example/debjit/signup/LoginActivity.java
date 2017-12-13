@@ -39,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         backbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                onBackPressed();
             }
         });
 
@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
                 String email = mail.getText().toString();
                 String ps = password.getText().toString();
 
-                if(TextUtils.isEmpty(ps))
+                if(TextUtils.isEmpty(ps)||ps.length()<8)
                     Toast.makeText(LoginActivity.this, "Enter your password", LENGTH_SHORT).show();
                 else {
                     Boolean b = isValidEmail(email);
@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
 
-            private Boolean isValidEmail(String mail) {
+            private Boolean isValidEmail(String email) {
                 if (TextUtils.isEmpty(target)) {
                     Toast.makeText(LoginActivity.this, "Enter valid email", LENGTH_SHORT).show();
                     return false;

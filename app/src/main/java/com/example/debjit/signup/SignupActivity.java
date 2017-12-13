@@ -43,7 +43,7 @@ import java.util.Calendar;
 
 import static android.widget.Toast.LENGTH_SHORT;
 
-public class SignupActivity extends AppCompatActivity implements View.OnClickListener {
+public class SignupActivity extends AppCompatActivity  {
     Button signupButton, asubutton;
     ImageView calenderButton;
     ImageView profilepic,backbtn;
@@ -67,9 +67,6 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_signup);
 
         signupButton = (Button) findViewById(R.id.signup);
-        signupButton.setOnClickListener(this);
-
-
         profilepic = (ImageView) findViewById(R.id.dp);
         profilepic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,15 +150,15 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                     Toast.makeText(SignupActivity.this, "Please enter your first name", LENGTH_SHORT).show();
                 else if (TextUtils.isEmpty(lname))
                     Toast.makeText(SignupActivity.this, "Please enter your last name", LENGTH_SHORT).show();
-                else if (TextUtils.isEmpty(ps))
+                else if (TextUtils.isEmpty(ps)||ps.length()<8)
                     Toast.makeText(SignupActivity.this, "Password Minimum 8 characters", LENGTH_SHORT).show();
                 else {
                     Boolean b = isValidEmail(email);
                     if (b) {
                         Toast.makeText(SignupActivity.this, "Registration Successful", LENGTH_SHORT).show();
-                        Intent intent;
-                        intent = new Intent(SignupActivity.this,LoginActivity.class);
-                        startActivity(intent);
+                        Intent intent3;
+                        intent3 = new Intent(SignupActivity.this,LoginActivity.class);
+                        startActivity(intent3);
                     } else
                         Toast.makeText(SignupActivity.this, "Enter Valid Email", LENGTH_SHORT).show();
                 }
@@ -284,22 +281,6 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         }
 
         profilepic.setImageBitmap(bm);
-    }
-
-
-
-    @Override
-    public void onClick(View view) {
-        if (view == signupButton) {
-            submitForm();
-        }
-    }
-
-    private void submitForm() {
-        if (awesomeValidation.validate()) {
-            Toast.makeText(SignupActivity.this, "Registration Successfull", Toast.LENGTH_LONG).show();
-        }
-
     }
 }
 
