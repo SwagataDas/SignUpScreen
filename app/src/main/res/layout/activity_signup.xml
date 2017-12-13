@@ -10,7 +10,7 @@
     <RelativeLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         android:background="#3f51b5">
 
         <ImageView
@@ -50,12 +50,13 @@
 
     <EditText
         android:id="@+id/firstname"
-        android:layout_width="324dp"
+        android:layout_width="335dp"
         android:layout_height="41dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:hint="First Name"
+        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -66,12 +67,13 @@
 
     <EditText
         android:id="@+id/lastname"
-        android:layout_width="329dp"
+        android:layout_width="337dp"
         android:layout_height="38dp"
         android:layout_marginBottom="312dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:hint="Last Name"
+        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -79,7 +81,7 @@
 
     <EditText
         android:id="@+id/email"
-        android:layout_width="322dp"
+        android:layout_width="334dp"
         android:layout_height="39dp"
         android:layout_marginBottom="252dp"
         android:layout_marginEnd="8dp"
@@ -87,6 +89,7 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="Email Id"
+        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.@"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -97,7 +100,7 @@
 
     <EditText
         android:id="@+id/dob1"
-        android:layout_width="322dp"
+        android:layout_width="331dp"
         android:layout_height="40dp"
         android:layout_marginBottom="196dp"
         android:layout_marginEnd="8dp"
@@ -120,13 +123,14 @@
         android:src="@drawable/ic_calender"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.934"
+        app:layout_constraintHorizontal_bias="0.976"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageView"
         app:layout_constraintVertical_bias="0.553"
         tools:ignore="InvalidId,MissingConstraints" />
 
     <RadioGroup
+        android:id="@+id/radiogroup"
         android:layout_width="326dp"
         android:layout_height="61dp"
         android:layout_marginBottom="140dp"
@@ -140,16 +144,16 @@
         tools:ignore="MissingConstraints">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/gender"
             android:layout_width="96dp"
             android:layout_height="55dp"
             android:gravity="center"
             android:text="Gender"
             android:textAlignment="center"
-            android:textSize="19sp" />
+            android:textSize="17sp" />
 
         <RadioButton
-            android:id="@+id/radioButton3"
+            android:id="@+id/female"
             android:layout_width="88dp"
             android:layout_height="45dp"
             android:layout_marginBottom="8dp"
@@ -158,7 +162,7 @@
             android:layout_marginTop="8dp"
             android:gravity="center"
             android:text="Female"
-            android:textSize="17sp"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -167,7 +171,7 @@
             tools:ignore="MissingConstraints" />
 
         <RadioButton
-            android:id="@+id/radioButton4"
+            android:id="@+id/male"
             android:layout_width="82dp"
             android:layout_height="40dp"
             android:layout_marginBottom="8dp"
@@ -176,7 +180,7 @@
             android:layout_marginTop="8dp"
             android:gravity="center"
             android:text="Male"
-            android:textSize="17sp"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.891"
